@@ -48,3 +48,41 @@ def actualizar_autor(id_autor: int, datos: AutorActualizar, bd: Session = Depend
     bd.commit()
     bd.refresh(autor)
     return autor
+
+@router.delete("/{id_autor}", status_code=status.HTTP_204_NO_CONTENT)
+def eliminar_autor(
+    id_autor: int,
+    bd: Session = Depends(obtener_sesion_bd),
+    forzar: bool = Query(False, description="Forzar eliminación del autor y libros huérfanos"),
+):
+    autor = bd.query(AutorBD).filter(AutorBD.id == id_autor).first()
+    if not autor:
+        raise HTTPException(status_code=404, detail="Autor no encontrado")
+
+    libros_huerfanos = []
+    for libro in autor.libros:
+        if len(libro.autores) == 1 and libro.copias_disponibles > 0:
+            libros_huerfanos.append(libro)
+
+    if libros_huerfanos and not forzar:
+        raise HTTPException(
+            status_code=400,
+            detail={
+                "error": "No se puede eliminar el autor: algunos libros quedarían sin autores y tienen copias disponibles.",
+                "libros_bloqueados": [
+                    {"id": l.id, "titulo": l.titulo, "copias_disponibles": l.copias_disponibles}
+                    for l in libros_huerfanos
+                ],
+            },
+        )
+
+    # Borrar relaciones y libros huérfanos
+    for libro in list(autor.libros):
+        libro.autores.remove(autor)
+        if len(libro.autores) == 0:
+            if forzar or libro.copias_disponibles == 0:
+                bd.delete(libro)
+
+    bd.delete(autor)
+    bd.commit()
+    return None
