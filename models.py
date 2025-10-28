@@ -1,30 +1,31 @@
-from pydantic import BaseModel
-from typing import List, Optional
+from sqlalchemy import Column, Integer, String, Table, ForeignKey
+from sqlalchemy.orm import relationship
+from .base_datos import Base
 
-class AutorBase(BaseModel):
-    nombre: str
-    pais: str
-    anio_nacimiento: int
+libro_autor = Table(
+    "libro_autor",
+    Base.metadata,
+    Column("id_libro", Integer, ForeignKey("libros.id", ondelete="CASCADE"), primary_key=True),
+    Column("id_autor", Integer, ForeignKey("autores.id", ondelete="CASCADE"), primary_key=True),
+)
 
-class AutorCreate(AutorBase):
-    pass
+class AutorBD(Base):
+    __tablename__ = "autores"
 
-class AutorOut(AutorBase):
-    id: int
-    class Config:
-        orm_mode = True
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String, nullable=False)
+    pais = Column(String)
+    anio_nacimiento = Column(Integer)
 
-class LibroBase(BaseModel):
-    titulo: str
-    genero: str
-    anio_publicacion: int
-    autor_id: int
-    
-class LibroCreate(LibroBase):
-    pass
+    libros = relationship("LibroBD", secondary=libro_autor, back_populates="autores")
 
-class LibroOut(LibroBase): 
-    id: int
-    autor: AutorOut
-    class Config:
-        orm_mode = True
+class LibroBD(Base):
+    __tablename__ = "libros"
+
+    id = Column(Integer, primary_key=True, index=True)
+    titulo = Column(String, nullable=False)
+    isbn = Column(String, nullable=False, unique=True, index=True)
+    anio_publicacion = Column(Integer)
+    copias_disponibles = Column(Integer, default=0)
+
+    autores = relationship("AutorBD", secondary=libro_autor, back_populates="libros")
