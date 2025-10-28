@@ -6,3 +6,7 @@ from .routers import autores, libros
 Base.metadata.create_all(bind=motor)
 
 app = FastAPI(title="Catálogo de Libros y Autores")
+
+# Registrar routers
+app.include_router(autores.router)
+app.include_router(libros.router)
