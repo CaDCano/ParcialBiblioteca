@@ -1,6 +1,7 @@
 📚 Sistema de Biblioteca con FastAPI 📚
 
 Descripcion:
+    
     - La biblioteca necesita un sistema para gestionar su catalogo de libros y los autores
     - El sistema debe permitir:
         ✅ Registrar autores (nombre, pais de origen, anio de naciemiento)
@@ -95,26 +96,68 @@ Swagger UI	http://127.0.0.1:8000/docs
 | DELETE | `/libros/{id}` | Eliminar libro (solo si copias = 0)|
 
 📥 Datos de prueba
-✅ Autores
+    ✅ Autores
 
-{
-  "nombre": "Gabriel García Márquez",
-  "pais": "Colombia",
-  "anio_nacimiento": 1927
-}
 
-✅ Libros
+        {
+        "nombre": "Gabriel García Márquez",
+        "pais": "Colombia",
+        "anio_nacimiento": 1927
+        }
 
-{
-  "titulo": "Cien Años de Soledad",
-  "isbn": "9788437604947",
-  "anio_publicacion": 1967,
-  "copias_disponibles": 10,
-  "id_autores": [1]
-}
+        {
+        "nombre": "Mario Vargas Llosa",
+        "pais": "Perú",
+        "anio_nacimiento": 1936
+        }
+
+        {
+        "nombre": "Isabel Allende",
+        "pais": "Chile",
+        "anio_nacimiento": 1942
+        }
+
+
+    ✅ Libros
+
+
+        {
+        "titulo": "Cien Años de Soledad",
+        "isbn": "9788437604947",
+        "anio_publicacion": 1967,
+        "copias_disponibles": 10,
+        "id_autores": [1]
+        }
+
+        {
+        "titulo": "La Ciudad y Los Perros",
+        "isbn": "9788420431406",
+        "anio_publicacion": 1963,
+        "copias_disponibles": 7,
+        "id_autores": [2]
+        }
+
+        {
+        "titulo": "La Casa de los Espíritus",
+        "isbn": "9788401337536",
+        "anio_publicacion": 1982,
+        "copias_disponibles": 5,
+        "id_autores": [3]
+        }
+
+        {
+        "titulo": "Cuentos del Realismo Mágico",
+        "isbn": "9780000001234",
+        "anio_publicacion": 1985,
+        "copias_disponibles": 4,
+        "id_autores": [1, 3]
+        }
+
+
 
 
 📦Requerimientos📦
+
     
     Contenido de requirements.txt:
         fastapi
