@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Table, ForeignKey
 from sqlalchemy.orm import relationship
-from .base_datos import Base
+from base_datos import Base
 
 libro_autor = Table(
     "libro_autor",

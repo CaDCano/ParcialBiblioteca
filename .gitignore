@@ -1,0 +1,24 @@
+# --- Entorno virtual ---
+.venv/
+venv/
+ENV/
+env/
+*.env
+.env.*
+
+# --- PyCharm ---
+.idea/
+
+# --- Archivos Python cache ---
+__pycache__/
+
+# --- Archivos de logs ---
+*.log
+
+# --- Base de datos SQLite local ---
+*.db
+*.sqlite3
+
+# --- FastAPI auto-generated ---
+*__pycache__/
+

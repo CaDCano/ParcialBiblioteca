@@ -1,12 +1,11 @@
 from fastapi import FastAPI
-from .base_datos import Base, motor
-from .routers import autores, libros
+from base_datos import Base, motor
+from modelos import *
+from routers import autores_router, libros_router
 
-# Crear las tablas
 Base.metadata.create_all(bind=motor)
 
-app = FastAPI(title="Catálogo de Libros y Autores")
+app = FastAPI(title="Catálogo Biblioteca")
 
-# Registrar routers
-app.include_router(autores.router)
-app.include_router(libros.router)
+app.include_router(autores_router)
+app.include_router(libros_router)

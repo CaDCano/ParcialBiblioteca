@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
 
-from ..base_datos import obtener_sesion_bd
-from ..modelos import LibroBD, AutorBD
-from ..esquemas import LibroCrear, LibroActualizar, LibroLeer, LibroConAutores, AutorLeer
+from base_datos import obtener_sesion_bd
+from modelos import LibroBD, AutorBD
+from esquemas import LibroCrear, LibroActualizar, LibroLeer, LibroConAutores, AutorLeer
 
 router = APIRouter(prefix="/libros", tags=["Libros"])
 

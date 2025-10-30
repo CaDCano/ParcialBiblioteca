@@ -22,7 +22,7 @@ class AutorLeer(BaseModel):
     anio_nacimiento: Optional[int]
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 # --- Esquemas de Libro ---
@@ -50,7 +50,7 @@ class LibroLeer(BaseModel):
     copias_disponibles: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 
