@@ -35,13 +35,14 @@ Endpionts requeridos (minimo):
         ✅ Relación muchos-a-muchos (libros ↔ autores)
 
 📏 Reglas de negocio:
+
     📋 ISBN unico : No pueden existir dos libros con mismo ISBN
     📋 No eliminar libro con copias disponibles
     📋 Cascada: Si elimina un autor, ¿Que pasa con sus libros? (opción ?forzar=true)
 
 
 🏗️ Estructura del proyecto:
-    
+
     ParcialBiblioteca/
     │── main.py
     │── base_datos.py
@@ -74,7 +75,7 @@ Endpionts requeridos (minimo):
         uvicorn main:app --reload
 
 🧪 Uso de la API
-🌐 Documentacion interactiva
+    🌐 Documentacion interactiva
 
 Tipo	URL
 Swagger UI	http://127.0.0.1:8000/docs
@@ -114,10 +115,11 @@ Swagger UI	http://127.0.0.1:8000/docs
 
 
 📦Requerimientos📦
-Contenido de requirements.txt:
-    fastapi
-    uvicorn
-    SQLAlchemy
-    pydantic
-    pydantic-settings
-    typing-extensions
+    
+    Contenido de requirements.txt:
+        fastapi
+        uvicorn
+        SQLAlchemy
+        pydantic
+        pydantic-settings
+        typing-extensions
