@@ -11,6 +11,17 @@ router = APIRouter(prefix="/autores", tags=["Autores"])
 
 @router.post("", response_model=AutorLeer, status_code=status.HTTP_201_CREATED)
 def crear_autor(datos: AutorCrear, bd: Session = Depends(obtener_sesion_bd)):
+    """
+    Crea un nuevo autor.
+
+    Valida:
+    - Nombre obligatorio
+    - Pais y anio opcionales
+
+    Retorna:
+    - Informacion del autor creado
+    """
+    
     autor = AutorBD(**datos.dict())
     bd.add(autor)
     bd.commit()
@@ -20,6 +31,15 @@ def crear_autor(datos: AutorCrear, bd: Session = Depends(obtener_sesion_bd)):
 
 @router.get("", response_model=List[AutorLeer])
 def listar_autores(pais: Optional[str] = Query(None), bd: Session = Depends(obtener_sesion_bd)):
+    """
+    Lista todos los autores.
+
+    Parámetros:
+    - pais (str, opcional): Filtrar autores por pais
+
+    Retorna:
+    - Lista de autores registrados
+    """
     consulta = bd.query(AutorBD)
     if pais:
         consulta = consulta.filter(AutorBD.pais == pais)
@@ -28,6 +48,16 @@ def listar_autores(pais: Optional[str] = Query(None), bd: Session = Depends(obte
 
 @router.get("/{id_autor}", response_model=AutorConLibros)
 def obtener_autor(id_autor: int, bd: Session = Depends(obtener_sesion_bd)):
+    """
+    Obtiene informacion de un autor por ID.
+
+    Incluye:
+    - Detalles del autor
+    - Libros asociados
+
+    Error:
+    - 404 si el autor no existe
+    """
     autor = bd.query(AutorBD).filter(AutorBD.id == id_autor).first()
     if not autor:
         raise HTTPException(status_code=404, detail="Autor no encontrado")
@@ -38,6 +68,15 @@ def obtener_autor(id_autor: int, bd: Session = Depends(obtener_sesion_bd)):
 
 @router.put("/{id_autor}", response_model=AutorLeer)
 def actualizar_autor(id_autor: int, datos: AutorActualizar, bd: Session = Depends(obtener_sesion_bd)):
+    """
+    Actualiza datos de un autor existente.
+
+    Valida:
+    - Campos correctos via Pydantic
+
+    Error:
+    - 404 si autor no existe
+    """
     autor = bd.query(AutorBD).filter(AutorBD.id == id_autor).first()
     if not autor:
         raise HTTPException(status_code=404, detail="Autor no encontrado")
@@ -55,6 +94,18 @@ def eliminar_autor(
     bd: Session = Depends(obtener_sesion_bd),
     forzar: bool = Query(False, description="Forzar eliminación del autor y libros huérfanos"),
 ):
+    
+    """
+    Elimina un autor.
+
+    Reglas de negocio:
+    - No puede eliminarse si tiene libros con copias disponibles
+    - Opción ?forzar=true elimina libros asociados
+
+    Error:
+    - 404 si autor no existe
+    - 400 si tiene libros activos
+    """
     autor = bd.query(AutorBD).filter(AutorBD.id == id_autor).first()
     if not autor:
         raise HTTPException(status_code=404, detail="Autor no encontrado")
