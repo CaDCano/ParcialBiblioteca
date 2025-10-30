@@ -40,20 +40,22 @@ Endpionts requeridos (minimo):
     📋 Cascada: Si elimina un autor, ¿Que pasa con sus libros? (opción ?forzar=true)
 
 
-🏗️ Estructura del proyecto
-ParcialBiblioteca/
-│── main.py
-│── base_datos.py
-│── modelos.py
-│── esquemas.py
-│── requirements.txt
-│── routers/
-│   ├── __init__.py
-│   ├── autores.py
-│   └── libros.py
-└── README.md
+🏗️ Estructura del proyecto:
+    
+    ParcialBiblioteca/
+    │── main.py
+    │── base_datos.py
+    │── modelos.py
+    │── esquemas.py
+    │── requirements.txt
+    │── routers/
+    │   ├── __init__.py
+    │   ├── autores.py
+    │   └── libros.py
+    └── README.md
 
 ⚙️ Instalación y ejecución
+
     1️⃣ Clonar repositorio
         git clone <https://github.com/CaDCano/ParcialBiblioteca>
         cd ParcialBiblioteca
@@ -93,6 +95,7 @@ Swagger UI	http://127.0.0.1:8000/docs
 
 📥 Datos de prueba
 ✅ Autores
+
 {
   "nombre": "Gabriel García Márquez",
   "pais": "Colombia",
@@ -100,6 +103,7 @@ Swagger UI	http://127.0.0.1:8000/docs
 }
 
 ✅ Libros
+
 {
   "titulo": "Cien Años de Soledad",
   "isbn": "9788437604947",
@@ -108,19 +112,12 @@ Swagger UI	http://127.0.0.1:8000/docs
   "id_autores": [1]
 }
 
-🧹 Reglas de negocio
-
-⚠️ No crear ISBN duplicados
-⚠️ No eliminar libros con copias disponibles
-✅ Borrar autor con ?forzar=true elimina libros sin coautores
 
 📦Requerimientos📦
-
 Contenido de requirements.txt:
-
-fastapi
-uvicorn
-SQLAlchemy
-pydantic
-pydantic-settings
-typing-extensions
+    fastapi
+    uvicorn
+    SQLAlchemy
+    pydantic
+    pydantic-settings
+    typing-extensions
